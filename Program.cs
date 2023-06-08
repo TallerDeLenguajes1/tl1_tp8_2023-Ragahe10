@@ -25,8 +25,7 @@ for (int i = 0; i < cantidad; i++){
     Pendientes.Add(CrearTarea());
 }
 List<Tarea> Realizadas = new List<Tarea>();
-int h = 0;
-for (int i = 0; i < (cantidad - h);){
+for (int i = 0; i < (Pendientes.Count());){
     Pendientes[i].MostrarTarea();
     Console.WriteLine("Realizo la tarea? (si/no)");
     string? resp = Console.ReadLine();
@@ -36,7 +35,6 @@ for (int i = 0; i < (cantidad - h);){
             if(Pendientes.Remove(Pendientes[i])){
                 Console.WriteLine("Se movió la tarea a 'Realizdas'");
             }
-            h++;
         }else{
             i++;
         }
