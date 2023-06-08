@@ -41,3 +41,20 @@ for (int i = 0; i < (Pendientes.Count());){
     }
 }
 
+Tarea BuscarTareaPorDescripcion(string desc, List<Tarea> lt){
+    Tarea retorna = new Tarea();
+
+    foreach (var tarea in lt){
+        if(tarea.Descripcion!=null){
+            if(tarea.Descripcion.ToLower() == desc.ToLower()){
+                retorna = tarea;
+            }
+        }
+    }
+    return retorna;
+}
+
+string? buscada = Console.ReadLine();
+if(buscada!=null){
+    BuscarTareaPorDescripcion(buscada,Pendientes).MostrarTarea();
+}

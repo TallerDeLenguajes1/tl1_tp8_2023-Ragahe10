@@ -17,6 +17,7 @@ public class Tarea{
         Descripcion = desc;
         Duracion = dur;
     }
+    public Tarea(){}
     //CONSTRUCTOR
     //METODOS
     public void MostrarTarea(){
