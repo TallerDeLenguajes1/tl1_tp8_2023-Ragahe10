@@ -53,7 +53,7 @@ Tarea BuscarTareaPorDescripcion(string desc, List<Tarea> lt){
     }
     return retorna;
 }
-
+Console.WriteLine("Ingrese descripcion de la tarea que desea buscar: ");
 string? buscada = Console.ReadLine();
 if(buscada!=null){
     BuscarTareaPorDescripcion(buscada,Pendientes).MostrarTarea();

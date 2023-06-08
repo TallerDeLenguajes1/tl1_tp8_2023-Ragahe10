@@ -17,13 +17,19 @@ public class Tarea{
         Descripcion = desc;
         Duracion = dur;
     }
-    public Tarea(){}
+    public Tarea(){
+        TareaID = -1;
+    }
     //CONSTRUCTOR
     //METODOS
     public void MostrarTarea(){
-        Console.WriteLine(" ~ ID: "+ TareaID);
-        Console.WriteLine(" ~ DESCRIPCION: "+Descripcion);
-        Console.WriteLine(" ~ DURACION: "+Duracion);
+        if(TareaID != -1 ){
+            Console.WriteLine(" ~ ID: "+ TareaID);
+            Console.WriteLine(" ~ DESCRIPCION: "+Descripcion);
+            Console.WriteLine(" ~ DURACION: "+Duracion);
+        }else{
+            Console.WriteLine("TAREA VACIA");
+        }
     }
     //METODOS
 }
