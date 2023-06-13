@@ -41,6 +41,10 @@ for (int i = 0; i < (Pendientes.Count());){
     }
 }
 
+Console.WriteLine("*TOTAL DE HORAS : "+TotalDeHoras(Realizadas));
+CargarHorasEnArchivo("TotalDeHoras.txt",TotalDeHoras(Realizadas));
+
+
 Tarea BuscarTareaPorDescripcion(string desc, List<Tarea> lt){
     Tarea retorna = new Tarea();
 
@@ -53,8 +57,23 @@ Tarea BuscarTareaPorDescripcion(string desc, List<Tarea> lt){
     }
     return retorna;
 }
+
 Console.WriteLine("Ingrese descripcion de la tarea que desea buscar: ");
 string? buscada = Console.ReadLine();
 if(buscada!=null){
     BuscarTareaPorDescripcion(buscada,Pendientes).MostrarTarea();
+}
+int TotalDeHoras(List<Tarea> Tareas){
+    int horas = 0;
+    foreach (var tarea in Tareas){
+        horas += tarea.Duracion;
+    }
+    return horas;
+}
+
+void CargarHorasEnArchivo(string ruta, int hora) {
+    using (StreamWriter x = new StreamWriter(ruta)) {
+        x.WriteLine("CANTIDAD DE HORAS");
+        x.WriteLine("Hora: "+hora);
+    }
 }
