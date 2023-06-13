@@ -1,79 +1,34 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using EspacioTarea;
-int ID = 0;
-List<string> Ltarea = new List<string>();
-Ltarea.Add("Lavar");
-Ltarea.Add("Limpiar");
-Ltarea.Add("Ordenar");
-Ltarea.Add("Reponer");
-Ltarea.Add("Contabilizar");
 
-Tarea CrearTarea(){
-    Random Dur = new Random();
-    ID++;
-    Tarea T = new Tarea(ID,Ltarea[Dur.Next(0,5)],Dur.Next(10,100));
-    return(T);
-}
+// Console.WriteLine("Ingrese una carpeta o nombre de directorio: ");
+// var carpeta = Console.ReadLine();
+// Console.WriteLine(carpeta);
+// if(Directory.Exists(carpeta)){
+//     var archivos = Directory.GetFiles(carpeta);
+//     foreach (var archivo in archivos){
+//         Console.WriteLine(archivo.ToString());
+//     }
+// }
+Console.Write("Ingrese una ruta valida: ");
+var path = Console.ReadLine();
 
-int cantidad;
-Console.WriteLine("Ingrese cantidad de tareas: ");
-if(!(int.TryParse(Console.ReadLine(), out cantidad))){
-    cantidad = 0;
-}
-List<Tarea> Pendientes = new List<Tarea>();
-for (int i = 0; i < cantidad; i++){
-    Pendientes.Add(CrearTarea());
-}
-List<Tarea> Realizadas = new List<Tarea>();
-for (int i = 0; i < (Pendientes.Count());){
-    Pendientes[i].MostrarTarea();
-    Console.WriteLine("Realizo la tarea? (si/no)");
-    string? resp = Console.ReadLine();
-    if(resp != null){
-        if(resp.ToLower() == "si"){
-            Realizadas.Add(Pendientes[i]);
-            if(Pendientes.Remove(Pendientes[i])){
-                Console.WriteLine("Se movió la tarea a 'Realizdas'");
-            }
-        }else{
-            i++;
+if(!Directory.Exists(path)){
+    Console.WriteLine("ERROR. Ruta invalida\n");
+} else{
+    List<string> listaArchivos = Directory.GetFiles(path).ToList();
+    System.Console.WriteLine("**" + path + "**");
+    foreach (var archivo in listaArchivos){
+        Console.WriteLine(archivo);
+    }
+    using(StreamWriter indexador = new StreamWriter("index.csv")){
+        indexador.WriteLine("n°;Nombre;Extencion");
+        for(int i = 0; i < listaArchivos.Count; i++){
+            // El método Path.GetFileWithoutExtension() devuelve solo el nombre del archivo
+            // El método Path.GetExtension() devuelve la extensión del archivo
+            indexador.WriteLine($"{i};{Path.GetFileNameWithoutExtension(listaArchivos[i])};{Path.GetExtension(listaArchivos[i])}");
         }
-    }
-}
 
-Console.WriteLine("*TOTAL DE HORAS : "+TotalDeHoras(Realizadas));
-CargarHorasEnArchivo("TotalDeHoras.txt",TotalDeHoras(Realizadas));
-
-
-Tarea BuscarTareaPorDescripcion(string desc, List<Tarea> lt){
-    Tarea retorna = new Tarea();
-
-    foreach (var tarea in lt){
-        if(tarea.Descripcion!=null){
-            if(tarea.Descripcion.ToLower() == desc.ToLower()){
-                retorna = tarea;
-            }
-        }
-    }
-    return retorna;
-}
-
-Console.WriteLine("Ingrese descripcion de la tarea que desea buscar: ");
-string? buscada = Console.ReadLine();
-if(buscada!=null){
-    BuscarTareaPorDescripcion(buscada,Pendientes).MostrarTarea();
-}
-int TotalDeHoras(List<Tarea> Tareas){
-    int horas = 0;
-    foreach (var tarea in Tareas){
-        horas += tarea.Duracion;
-    }
-    return horas;
-}
-
-void CargarHorasEnArchivo(string ruta, int hora) {
-    using (StreamWriter x = new StreamWriter(ruta)) {
-        x.WriteLine("CANTIDAD DE HORAS");
-        x.WriteLine("Hora: "+hora);
+        indexador.Close();
+        indexador.Dispose();
     }
 }
